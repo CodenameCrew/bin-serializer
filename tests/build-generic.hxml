@@ -1,0 +1,12 @@
+-cp src
+-cp ../
+-main Main
+
+--define HXCPP_CHECK_POINTER
+--define HXCPP_STACK_LINE
+--define HXCPP_DEBUG_LINK
+--define HXCPP_DEBUG
+
+--debug
+
+--define analyzer-optimize

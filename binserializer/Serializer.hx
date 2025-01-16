@@ -1,0 +1,6 @@
+package binserializer;
+
+class Serializer {
+	
+
+}

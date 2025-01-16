@@ -1,0 +1,5 @@
+build-generic.hxml
+
+--cpp bin/cpp
+--cmd cd bin/cpp
+--cmd Main-debug.exe

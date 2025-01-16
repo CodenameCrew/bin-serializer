@@ -1,0 +1,13 @@
+{
+    "name": "bin-serializer",
+    "description": "A recreation of haxe.Serializer and haxe.Unserializer except it uses bytes",
+    "classPath": "",
+    "version": "1.0.0",
+    "releasenote": "Initial release",
+    "license": "MIT",
+
+    "tags": ["bin", "serializer"],
+
+    "url": "https://github.com/CodenameCrew/bin-serializer",
+    "contributors": ["Ne_Eo"]
+}
