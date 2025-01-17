@@ -15,7 +15,7 @@ class UnserializerTests {
 		return Bytes.ofHex(hex);
 	}
 
-	static function unserialize(hex:String):Dynamic {
+	public static function unserialize(hex:String):Dynamic {
 		var bytes = fromHex(hex);
 		var unserializer = new Unserializer(bytes);
 		var result:Dynamic = unserializer.unserialize();
@@ -27,6 +27,8 @@ class UnserializerTests {
 	}
 
 	public static function test() {
+		Sys.println("## UnserializerTests ##");
+
 		AssertUtils.shouldFinish("Parse NULL", function() {
 			AssertUtils.assertEquals(unserialize("00"), null);
 		});
