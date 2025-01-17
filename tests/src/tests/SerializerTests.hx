@@ -1,7 +1,6 @@
 package tests;
 
 import binserializer.Serializer;
-import haxe.Int64;
 import tests.UnserializerTests.TestClass;
 import tests.UnserializerTests.TestEnum;
 import tests.UnserializerTests;
@@ -85,17 +84,17 @@ class SerializerTests {
 
 		AssertUtils.shouldFinish("Writes INT_32", function() {
 			assert(serialize(65536), "06 00 00 01 00");
-			assert(serialize(-2), "06 fe ff ff ff"); // cant use -1 because we have a special case for -1
+			// assert(serialize(-2), "06 fe ff ff ff"); // cant use -1 because we have a special case for -1
 			assert(serialize(2147483647), "06 ff ff ff 7f");
 			assert(serialize(-2147483648), "06 00 00 00 80");
 		});
 
 		AssertUtils.shouldFinish("Writes INT_64", function() {
 			// assert(serialize(Int64.make(0, 1)), "07 01 00 00 00 00 00 00 00");
-			assert(serialize(Int64.make(0, -1)), "07 ff ff ff ff 00 00 00 00");
+			assert(serialize(haxe.Int64.make(0, -1)), "07 ff ff ff ff 00 00 00 00");
 			// assert(serialize(Int64.make(0, 0)), "07 00 00 00 00 00 00 00 00");
-			assert(serialize(Int64.make(0x7fffffff, 0xffffffff)), "07 ff ff ff ff ff ff ff 7f");
-			assert(serialize(Int64.make(0x80000000, 0x00000000)), "07 00 00 00 00 00 00 00 80");
+			assert(serialize(haxe.Int64.make(0x7fffffff, 0xffffffff)), "07 ff ff ff ff ff ff ff 7f");
+			assert(serialize(haxe.Int64.make(0x80000000, 0x00000000)), "07 00 00 00 00 00 00 00 80");
 			// assert(serialize(Int64.make(0xffffffff, 0xffffffff)), "07 ff ff ff ff ff ff ff ff");
 		});
 
@@ -298,6 +297,18 @@ class SerializerTests {
 		AssertUtils.shouldFinish("Writes EMPTY_SPACE", function() {
 			assert(serialize([1, 2, 3, 4, 5]), "10 0401 0402 0403 0404 0405 ff");
 			assert(serialize([1, null, null, null, 5]), "10 0401 fc 03 0405 ff");
+		});
+
+		AssertUtils.shouldFinish("Writes PI", function() {
+			assert(serialize(Math.PI), "25");
+		});
+
+		AssertUtils.shouldFinish("Writes NEG_INT8", function() {
+			assert(serialize(-2), "26 02");
+		});
+
+		AssertUtils.shouldFinish("Writes NEG_INT16", function() {
+			assert(serialize(-512), "27 00 02");
 		});
 	}
 }

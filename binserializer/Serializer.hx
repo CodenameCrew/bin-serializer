@@ -159,13 +159,28 @@ class Serializer {
 					writeTag(NEG_ONE);
 					return;
 				}
-				writeInt(v, INT8, INT16, INT32);
+				var isNeg = v < 0;
+				var abs = isNeg ? -v : v;
+				// >= is due to small edge case with -2147483648
+				if (isNeg && abs >= 0 && abs <= 255) {
+					writeTag(NEG_INT8);
+					writeIntWithoutTag(abs);
+				}
+				else if (isNeg && abs >= 0 && abs <= 65535) {
+					writeTag(NEG_INT16);
+					writeIntWithoutTag(abs);
+				}
+				else {
+					writeInt(v, INT8, INT16, INT32);
+				}
 			case TFloat:
 				var v:Float = v;
 				if (Math.isNaN(v))
 					writeTag(NAN);
 				else if (!Math.isFinite(v))
 					writeTag(if (v < 0) NEGATIVE_INFINITY else POSITIVE_INFINITY);
+				else if (v == Math.PI)
+					writeTag(PI);
 				else {
 					// TODO: check if single precision is enough
 					writeTag(FLOAT);

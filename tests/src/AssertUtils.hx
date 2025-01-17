@@ -27,6 +27,8 @@ class AssertUtils {
 				}
 			case TFunction:
 				return "<function>";
+			case TClass(Date):
+				return "Date(" + obj.getTime() + ")";
 			case TClass(c):
 				if (obj is IMap) {
 					var map:IMap<Dynamic, Dynamic> = cast obj;

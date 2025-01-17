@@ -46,6 +46,9 @@ enum abstract SerializedFormat(ByteUInt) from ByteUInt to ByteUInt {
 	var CLASS_TYPE = 0x22;
 	var ENUM_TYPE = 0x23;
 	var NEG_ONE = 0x24;
+	var PI = 0x25;
+	var NEG_INT8 = 0x26;
+	var NEG_INT16 = 0x27;
 
 	var EMPTY_SPACE_8 = 0xFC;
 	var EMPTY_SPACE_16 = 0xFD;

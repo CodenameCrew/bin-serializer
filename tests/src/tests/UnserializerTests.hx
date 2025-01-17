@@ -277,6 +277,18 @@ class UnserializerTests {
 			AssertUtils.assertEquals(unserialize("10 0401 fc 03 0405 ff"), [1, null, null, null, 5]);
 		});
 
+		AssertUtils.shouldFinish("Parse PI", function() {
+			AssertUtils.assertEquals(unserialize("25"), Math.PI);
+		});
+
+		AssertUtils.shouldFinish("Parse NEG_INT8", function() {
+			AssertUtils.assertEquals(unserialize("26 02"), -2);
+		});
+
+		AssertUtils.shouldFinish("Parse NEG_INT16", function() {
+			AssertUtils.assertEquals(unserialize("27 02 00"), -2);
+		});
+
 		// var bytes = fromHex("0000000000000000");
 		// bytes.setInt64(0, Int64.make(0x80000000, 0x00000000));
 		// trace(bytes.toHex());

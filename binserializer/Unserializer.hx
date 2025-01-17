@@ -100,24 +100,15 @@ class Unserializer {
 	}
 
 	function unserializeEnum<T>(edecl:Enum<T>, tag:String) {
-		/*if (get(pos++) != ":".code)
-				throw "Invalid enum format";
-			var nargs = readDigits();
-			if (nargs == 0)
-				return Type.createEnum(edecl, tag);
-			var args = new Array();
-			while (nargs-- > 0)
-				args.push(unserialize());
-			return Type.createEnum(edecl, tag, args); */
-
 		var args:Array<Dynamic> = [];
 		while (true) {
-			var byte = get(pos++);
-			if (byte == SerializedFormat.END)
+			var byte = get(pos);
+			if (byte == SerializedFormat.END) {
+				pos++;
 				break;
+			}
 			args.push(unserialize());
 		}
-		// pos++;
 		if (args.length == 0)
 			return Type.createEnum(edecl, tag);
 		return Type.createEnum(edecl, tag, args);
@@ -192,6 +183,10 @@ class Unserializer {
 				return buf.getDouble(advanceAndPrev(8));
 			case SINGLE:
 				return buf.getFloat(advanceAndPrev(4));
+			case NEG_INT8:
+				return -get(pos++);
+			case NEG_INT16:
+				return -buf.getUInt16(advanceAndPrev(2));
 			case STRING_8 | STRING_16 | STRING_32:
 				pos--;
 				var len = getIntCustom(STRING_8, STRING_16, STRING_32);
@@ -208,6 +203,8 @@ class Unserializer {
 				return Math.POSITIVE_INFINITY;
 			case NEGATIVE_INFINITY:
 				return Math.NEGATIVE_INFINITY;
+			case PI:
+				return Math.PI;
 			case ARRAY:
 				var a = new Array<Dynamic>();
 				#if cpp

@@ -63,8 +63,8 @@ class CompareUtils {
 				if ((a is haxe.ds.ObjectMap) && (b is haxe.ds.ObjectMap)) {
 					var a = cast(a, haxe.ds.ObjectMap<Dynamic, Dynamic>);
 					var b = cast(b, haxe.ds.ObjectMap<Dynamic, Dynamic>);
-					var a_keys = [for (key in a.keys()) key];
-					var b_keys = [for (key in b.keys()) key];
+					var a_keys = [for (key in a.keys()) haxe.Serializer.run(key)];
+					var b_keys = [for (key in b.keys()) haxe.Serializer.run(key)];
 					a_keys.sort(Reflect.compare);
 					b_keys.sort(Reflect.compare);
 					if (!deepEqual(a_keys, b_keys)) {
