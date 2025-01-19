@@ -3,6 +3,7 @@ package tests;
 import binserializer.Serializer;
 import binserializer.Unserializer;
 import haxe.Log;
+import haxe.ds.StringMap;
 import haxe.io.Bytes;
 import tests.UnserializerTests;
 
@@ -213,6 +214,18 @@ class FullTests {
 				_.set(TestEnum.B(2), {c: 3});
 				_;
 			});
+		});
+
+		AssertUtils.shouldFinish("Random", function() {
+			// Test if empty maps are parsed correctly
+			var obj = {
+				hello: {
+					hits: new StringMap(),
+					meow: 4
+				}
+			}
+
+			assertParsing(obj);
 		});
 	}
 }

@@ -244,7 +244,7 @@ class Serializer {
 				writeTag(INT_MAP);
 				var v:haxe.ds.IntMap<Dynamic> = v;
 				for (k in v.keys()) {
-					serialize(k);
+					writeInt(k);
 					serialize(v.get(k));
 				}
 				writeTag(END);
